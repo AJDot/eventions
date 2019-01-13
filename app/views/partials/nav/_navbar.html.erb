@@ -1,0 +1,26 @@
+<nav class="navbar-expand-lg">
+  <div class="container-fluid">
+    <%= link_to root_path, class: 'navbar-page-title', title: 'Go to Eventions Home' do %>
+      <h1>Eventions</h1>
+    <% end %>
+
+    <% if user_signed_in? %>
+      <div class="navbar-nav dropdown">
+        <button class="btn dropdown-toggle" id="loginDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <%= current_user.first_name %>
+        </button>
+        <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="loginDropdown">
+          <li>
+            <%= link_to 'My Dashboard', root_path, class: "dropdown-item" %>
+          </li>
+          <li>
+            <%= link_to 'Configure Events', event_types_path, class: "dropdown-item" %>
+          </li>
+          <li>
+            <%= link_to 'Logout', destroy_user_session_path, method: :delete, class: "dropdown-item" %>
+          </li>
+        </ul>
+      </div>
+    <% end %>
+  </div>
+</nav>

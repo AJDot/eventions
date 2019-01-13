@@ -1,0 +1,73 @@
+<%
+  event_types = current_user.event_types
+%>
+<header>
+  <h1>My Dashboard</h1>
+</header>
+
+<div class="container">
+  <%= render partial: 'partials/alert' %>
+
+  <div class="table" role="table" aria-describedby="event-types-table">
+    <h2 id="event-types-table">Your Recent Events</h2>
+    <% if event_types.present? %>
+      <div class="header" role="rowgroup">
+        <div class="row" role="row">
+          <div class="col" role="columnheader">Name</div>
+        </div>
+      </div>
+      <div class="body">
+        <div role="rowgroup">
+          <% event_types.each do |event_type| %>
+            <div class="row" role="row">
+              <div class="col" role="cell">
+                <%= event_type.name %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    <% else %>
+      <div role="rowgroup">
+        <div class="row" role="row">
+          <p role="cell" aria-colspan="1">You have no event types</p>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<!--  <div class="table" role="table" aria-describedby="events-table">-->
+<!--    <h2 id="events-table">Your Recent Events</h2>-->
+    <%# if events.present? %>
+<!--      <div class="header" role="rowgroup">-->
+<!--        <div class="row" role="row">-->
+<!--          <div class="col" role="columnheader">Name</div>-->
+<!--          <div class="col" role="columnheader">Type</div>-->
+<!--          <div class="col" role="columnheader">Date</div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      <div class="body">-->
+<!--        <div role="rowgroup">-->
+          <%# events.each do |event| %>
+<!--            <div class="row" role="row">-->
+<!--              <div class="col" role="cell">-->
+                <%#= event.name %>
+<!--              </div>-->
+<!--              <div class="col" role="cell">-->
+                <%#= EventType[event.event_type] %>
+<!--              </div>-->
+<!--              <div class="col" role="cell">-->
+                <%#= event.date %>
+<!--              </div>-->
+<!--            </div>-->
+          <%# end %>
+<!--        </div>-->
+<!--      </div>-->
+    <%# else %>
+<!--      <div role="rowgroup">-->
+<!--        <div class="row" role="row">-->
+<!--          <p role="cell" aria-colspan="3">You have no recent events</p>-->
+<!--        </div>-->
+<!--      </div>-->
+    <%# end %>
+<!--  </div>-->
+</div>
