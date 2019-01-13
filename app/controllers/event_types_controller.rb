@@ -14,9 +14,25 @@ class EventTypesController < ApplicationController
 
   def edit
     @event_type_as_json = @event_type.as_json
+    @user_as_json = current_user.as_json
+  end
+
+  def update
+    render json: {success: @event_type.update(update_params), event_type: @event_type.as_json}
   end
 
   private
+
+  def event_type_params
+    params.require(:event_type).permit(
+        :id,
+        :name
+    )
+  end
+
+  def update_params
+    event_type_params
+  end
 
   def get_layout
     case action_name
