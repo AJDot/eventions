@@ -1,6 +1,21 @@
 export default class AppConfig {
   environment: string;
 
+  constructor() {
+    this.environment = window.environment;
+  }
+
+  saveTimeout() {
+    switch (this.environment) {
+      case 'development':
+        return 1000;
+      case 'production':
+        return 1000;
+      case 'test':
+        return 100;
+    }
+  }
+
   debounce(func, delay, context) {
     let timeout;
     return function (...args) {

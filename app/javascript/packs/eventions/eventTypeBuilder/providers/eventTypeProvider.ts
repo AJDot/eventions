@@ -1,4 +1,4 @@
-import Provider from "../../common/providers/provider";
+import Provider from "../../../common/providers/provider";
 
 export default class EventTypeProvider extends Provider {
   update(json) {

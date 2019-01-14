@@ -1,11 +1,13 @@
 import Vue from "vue/dist/vue";
+import trackable from "../classMixins/trackable";
 
-export default class Model {
+class Model {
   id: string;
   parent: any;
+  _hasChanged: boolean = false;
   client_id: string;
   store: any;
-  except: [];
+  except: string[] = ['except', 'parent', 'store'];
 
   get EMBEDDED_MODELS(): {[key: string]: Function} {
     return {};
@@ -26,27 +28,54 @@ export default class Model {
       if (Object.keys(this.EMBEDDED_MODELS).includes(key)) {
         this.loadEmbeddedModel(key, json);
       } else {
-        Vue.set(this, key, json[key]);
+        this.defineProperty(key, json[key]);
       }
     }
 
     return this;
   }
 
-  asJson(options: any = {except: ['except', 'parent', 'store']}) {
+  defineProperty(key: string, initialValue: any, trackInitialValue: boolean = false) {
+    let _key = '_' + key;
+
+    Object.defineProperty(this, key, {
+      get() {
+        return this[_key];
+      },
+
+      set(newVal) {
+        let currVal = this[_key];
+        if (currVal === newVal) {
+          return;
+        }
+
+        this[_key] = newVal;
+
+        this.trackChange(key, currVal, newVal);
+      }
+    });
+
+    if (trackInitialValue) {
+      this[key] = initialValue;
+    } else {
+      this[_key] = initialValue;
+    }
+  }
+
+  asJson(options: any = {except: this.except}) {
     window.AppConfig.mergeJson(options, {except: this.except});
     let json = {};
     let ownPropertyNames = Object.getOwnPropertyNames(this);
     for (let i = 0; i < ownPropertyNames.length; i++) {
       let propertyName = ownPropertyNames[i];
-      if (!options.except || !options.except.includes(propertyName) && !propertyName.startsWith('_')) {
-        if (Array.isArray(this[propertyName]) && this[propertyName][0] instanceof Model) {
-          json[`${propertyName}_attributes`] = this[propertyName].map(model => model.asJson());
-        } else if (this[propertyName] instanceof Model) {
-          json[`${propertyName}_attributes`] = this[propertyName].asJson();
-        } else {
+      if (!options.except || !options.except.includes(propertyName)) {
+        if (!propertyName.startsWith('_')) {
           json[propertyName] = this[propertyName];
         }
+      } else if (Array.isArray(this[propertyName]) && this[propertyName][0] instanceof Model) {
+          json[`${propertyName}_attributes`] = this[propertyName].map(model => model.asJson());
+      } else if (this[propertyName] instanceof Model) {
+        json[`${propertyName}_attributes`] = this[propertyName].asJson();
       }
     }
     return json;
@@ -85,3 +114,8 @@ export default class Model {
     return obj.loadFromJson(json);
   }
 }
+
+// Mixin trackable to Model
+trackable.call(Model.prototype);
+
+export default Model;

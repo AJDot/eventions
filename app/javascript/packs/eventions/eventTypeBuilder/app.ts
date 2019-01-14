@@ -4,7 +4,7 @@ import Vue from 'vue/dist/vue'
 import Vuex from 'vuex/dist/vuex'
 import App from './appVue.vue'
 import EventType from "./models/eventType";
-import AppConfig from "../common/appConfig";
+import AppConfig from "../../common/appConfig";
 
 declare global {
   interface Window {
@@ -21,8 +21,8 @@ var onReady = function () {
   let eventType = new EventType().loadFromJson($rootElement.data('event-type'));
   let user = $rootElement.data('user');
 
-
   let store = storeFactory(eventType, user);
+  eventType.setStore(store);
   const app = new Vue({
     el: "#vue-data",
     render: h => h(App),
