@@ -5,9 +5,9 @@ class Model {
   id: string;
   parent: any;
   _hasChanged: boolean = false;
-  client_id: string;
   store: any;
-  except: string[] = ['except', 'parent', 'store'];
+  except: string[] = ['except', 'include', 'parent', 'store'];
+  include: string[] = [];
 
   get EMBEDDED_MODELS(): {[key: string]: Function} {
     return {};
@@ -69,13 +69,15 @@ class Model {
     for (let i = 0; i < ownPropertyNames.length; i++) {
       let propertyName = ownPropertyNames[i];
       if (!options.except || !options.except.includes(propertyName)) {
-        if (!propertyName.startsWith('_')) {
-          json[propertyName] = this[propertyName];
+        if (!propertyName.startsWith('_') || this.include.includes(propertyName)) {
+          if (Array.isArray(this[propertyName]) && this[propertyName][0] instanceof Model) {
+            json[`${propertyName}_attributes`] = this[propertyName].map(model => model.asJson());
+          } else if (this[propertyName] instanceof Model) {
+            json[`${propertyName}_attributes`] = this[propertyName].asJson();
+          } else {
+            json[propertyName] = this[propertyName];
+          }
         }
-      } else if (Array.isArray(this[propertyName]) && this[propertyName][0] instanceof Model) {
-          json[`${propertyName}_attributes`] = this[propertyName].map(model => model.asJson());
-      } else if (this[propertyName] instanceof Model) {
-        json[`${propertyName}_attributes`] = this[propertyName].asJson();
       }
     }
     return json;

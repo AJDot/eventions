@@ -3,6 +3,6 @@ class EventTypeAbility
 
   def initialize(user)
     return if user.nil?
-    can [:index, :show, :edit, :update, :create], EventType
+    can [:index, :show, :edit, :update, :create, :destroy], EventType
   end
 end

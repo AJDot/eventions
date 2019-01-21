@@ -1,4 +1,4 @@
-import {EventFieldType} from "../enums/eventFieldType";
+import {EventFieldType} from "../../enums/eventFieldType";
 import NumberField from "./numberField";
 import TextField from "./textField";
 

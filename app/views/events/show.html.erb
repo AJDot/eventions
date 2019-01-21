@@ -1,0 +1,8 @@
+<div class="container">
+  <div>Title: <%= @event.title %></div>
+  <% @event.event_type.event_fields.map {|field| {title: field.label, key: "f_#{field.id.to_s}"}}.each do |attrs| %>
+    <div>
+      <%= attrs[:title] %><%= @event[attrs[:key]] %>
+    </div>
+  <% end %>
+</div>

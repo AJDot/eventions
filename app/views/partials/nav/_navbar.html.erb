@@ -5,6 +5,20 @@
     <% end %>
 
     <% if user_signed_in? %>
+      <%= link_to '+ Event', new_event_path, class: 'btn' %>
+      <div class="navbar-nav dropdown">
+        <button class="btn dropdown-toggle" id="eventTypeDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          + Event
+        </button>
+        <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="eventTypeDropdown">
+          <% current_user.event_types.each do |event_type| %>
+            <li>
+              <%= link_to event_type.title, new_event_path(event: {event_type_id: event_type.id}), class: "dropdown-item" %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+
       <div class="navbar-nav dropdown">
         <button class="btn dropdown-toggle" id="loginDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <%= current_user.first_name %>

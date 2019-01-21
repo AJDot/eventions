@@ -1,10 +1,18 @@
 import Model from "../../../common/models/model";
+import EventField from "./eventFields/eventField";
+import EventFieldFactory from "./eventFields/eventFieldFactory";
 
 export default class EventType extends Model {
-  name: string;
+  title: string;
   saveTimer: number;
   except: string[] = ['except', 'parent', 'store'];
+  event_fields: EventField[] = [];
 
+  get EMBEDDED_MODELS(): {[key: string]: Function} {
+    return {event_fields: (parent, json) => EventFieldFactory.create(json._type)};
+  }
+
+  // ****************************** Track Changes ******************************
   get hasChanged(): boolean {
     return this._hasChanged;
   }
@@ -15,6 +23,7 @@ export default class EventType extends Model {
     }
     this._hasChanged = newVal;
   }
+  // ****************************** Track Changes End ******************************
 
   queueUpdate() {
     if (this.saveTimer) {
@@ -33,11 +42,11 @@ export default class EventType extends Model {
     }
   }
 
-  get defaultName(): string {
+  get defaultTitle(): string {
     return 'Untitled Event Type';
   }
 
-  get displayName(): string {
-    return this.name || this.defaultName;
+  get displayTitle(): string {
+    return this.title || this.defaultTitle;
   }
 }

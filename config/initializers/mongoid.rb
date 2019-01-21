@@ -5,7 +5,7 @@ module Mongoid
       options[:except] << :_id
       attrs = super(options)
       (id_keys - options[:except]).each do |key|
-        attrs[key] = self[key].to_s
+        attrs[key.to_s] = self[key].is_a?(Array) ? self[key].map(&:to_s) : self[key].to_s
       end
       attrs
     end

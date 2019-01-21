@@ -1,0 +1,16 @@
+<header>
+  <h2>New Event</h2>
+</header>
+<div class="container">
+  <%= form_for @event do |f| %>
+    <%= f.hidden_field :event_type_id %>
+    <%= f.label :title, 'Title' %>
+    <%= f.text_field :title %>
+    <% @event.event_type.event_fields.each do |field| %>
+      <%= render partial: 'partials/event_fields/factory', locals: {f: f, type: field.get_type, id: "f_#{field.id.to_s}"} %>
+    <% end %>
+    <div>
+      <%= f.submit 'Create' %>
+    </div>
+  <% end %>
+</div>

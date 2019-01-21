@@ -1,6 +1,3 @@
-<%
-  event_types = current_user.event_types
-%>
 <header>
   <h1>My Dashboard</h1>
 </header>
@@ -10,18 +7,25 @@
 
   <div class="table" role="table" aria-describedby="event-types-table">
     <h2 id="event-types-table">Your Recent Events</h2>
-    <% if event_types.present? %>
+    <% if @events.present? %>
       <div class="header" role="rowgroup">
         <div class="row" role="row">
           <div class="col" role="columnheader">Name</div>
+          <div class="col" role="columnheader">Type</div>
         </div>
       </div>
       <div class="body">
         <div role="rowgroup">
-          <% event_types.each do |event_type| %>
+          <% @events.each do |event| %>
             <div class="row" role="row">
               <div class="col" role="cell">
-                <%= event_type.name %>
+                <%= event.title %>
+              </div>
+              <div class="col" role="cell">
+                <%= event.event_type.title %>
+              </div>
+              <div class="col" role="cell">
+                <%= link_to 'view', event_path(event) %>
               </div>
             </div>
           <% end %>
@@ -30,7 +34,7 @@
     <% else %>
       <div role="rowgroup">
         <div class="row" role="row">
-          <p role="cell" aria-colspan="1">You have no event types</p>
+          <p role="cell" aria-colspan="1">You have no events.</p>
         </div>
       </div>
     <% end %>

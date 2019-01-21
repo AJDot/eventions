@@ -1,0 +1,7 @@
+<% case type %>
+<% when EventFieldType.Text %>
+  <%= render partial: 'partials/event_fields/text_field', locals: {f: f, id: id} %>
+<% when EventFieldType.Number %>
+  <%= render partial: 'partials/event_fields/number_field', locals: {f: f, id: id} %>
+<% else %>
+<% end %>

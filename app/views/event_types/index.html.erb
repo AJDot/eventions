@@ -1,3 +1,4 @@
+<%= render partial: 'partials/alert' %>
 <header>
   <div class="row">
     <div class="col-md-10"></div>
@@ -11,7 +12,7 @@
     <p class="sr-only" id="event-types-table">A list of event types</p>
     <div class="header" role="rowgroup">
       <div class="row" role="row">
-        <div class="col" role="columnheader">Name</div>
+        <div class="col" role="columnheader">Title</div>
         <div class="col" role="columnheader">Created At</div>
         <div class="col" role="columnheader"></div>
       </div>
@@ -22,13 +23,14 @@
         <% @event_types.each do |event_type| %>
           <div class="row" role="row">
             <div class="col" role="cell">
-              <%= event_type.name %>
+              <%= event_type.title %>
             </div>
             <div class="col" role="cell">
               <%= event_type.c_at %>
             </div>
             <div class="col" role="cell">
               <%= link_to 'Edit', edit_event_type_path(event_type) %>
+              <%= link_to 'Delete', event_type_path(event_type), method: :delete %>
             </div>
           </div>
         <% end %>

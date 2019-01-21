@@ -1,7 +1,7 @@
 <template>
   <nav class="navbar-expand-lg">
     <div class="container-fluid">
-      <h3>{{selectedEventType.displayName}}</h3>
+      <h3>{{selectedEventType.displayTitle}}</h3>
       <button @click="update" class="btn">Save</button>
     </div>
   </nav>
