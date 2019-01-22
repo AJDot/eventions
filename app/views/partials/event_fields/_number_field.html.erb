@@ -1,7 +1,7 @@
 <%
-  @event.process_attribute(id, '')
+  @event.process_attribute(id, @event[id])
 %>
 <div>
-  <%= f.label id %>
-  <%= f.number_field id %>
+  <%= f.label(id, event_field.label) %>
+  <%= f.number_field(id) %>
 </div>

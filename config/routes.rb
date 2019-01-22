@@ -3,5 +3,5 @@ Rails.application.routes.draw do
   root controller: :dashboards, action: :show
 
   resources :event_types, only: [:index, :new, :edit, :update, :destroy]
-  resources :events, only: [:new, :create, :show]
+  resources :events, only: [:new, :create, :show, :edit, :update]
 end

@@ -42,4 +42,12 @@ class User
 
   has_many :event_types
   has_many :events
+
+  def name
+    if first_name || last_name
+      "#{first_name} #{last_name}".strip
+    else
+      email
+    end
+  end
 end

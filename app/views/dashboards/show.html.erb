@@ -10,8 +10,9 @@
     <% if @events.present? %>
       <div class="header" role="rowgroup">
         <div class="row" role="row">
-          <div class="col" role="columnheader">Name</div>
           <div class="col" role="columnheader">Type</div>
+          <div class="col" role="columnheader">Created On</div>
+          <div class="col" role="columnheader"></div>
         </div>
       </div>
       <div class="body">
@@ -22,10 +23,11 @@
                 <%= event.title %>
               </div>
               <div class="col" role="cell">
-                <%= event.event_type.title %>
+                <%= event.c_at %>
               </div>
               <div class="col" role="cell">
-                <%= link_to 'view', event_path(event) %>
+                <%= link_to 'View', event_path(event) %>
+                <%= link_to 'Edit', edit_event_path(event) %>
               </div>
             </div>
           <% end %>

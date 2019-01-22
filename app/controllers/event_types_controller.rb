@@ -18,7 +18,7 @@ class EventTypesController < ApplicationController
   end
 
   def update
-    render json: {success: @event_type.update(update_params), event_type: @event_type.as_json}
+    render json: {success: @event_type.update_attributes(update_params), event_type: @event_type.as_json}
   end
 
   def destroy

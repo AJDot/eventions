@@ -1,0 +1,5 @@
+<%= render partial: 'partials/alert' %>
+<%= f.hidden_field :event_type_id %>
+<% @event.event_type.event_fields.each do |field| %>
+  <%= render partial: 'partials/event_fields/factory', locals: {f: f, type: field.get_type, id: "f_#{field.id.to_s}", event_field: field} %>
+<% end %>

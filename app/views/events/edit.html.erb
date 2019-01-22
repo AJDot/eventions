@@ -1,12 +1,13 @@
 <header>
-  <h2>New <%= @event.event_type.title %></h2>
+  <h2>Edit <%= @event.title %> on <%= @event.c_at %></h2>
 </header>
-
+<%= render partial: 'partials/alert' %>
 <div class="container">
   <%= form_for @event do |f| %>
     <%= render partial: 'events/form', locals: {f: f} %>
     <div>
-      <%= f.submit 'Create' %>
+      <%= f.submit 'Update' %>
     </div>
   <% end %>
 </div>
+

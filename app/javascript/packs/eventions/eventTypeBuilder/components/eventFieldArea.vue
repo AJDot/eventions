@@ -28,7 +28,7 @@
     },
     methods: {
       create(eventFieldType: EventFieldType) {
-        let eventField = EventFieldFactory.create(eventFieldType);
+        let eventField = EventFieldFactory.create(this.selectedEventType, eventFieldType);
         this.selectedEventType.event_fields.push(eventField);
       }
     }

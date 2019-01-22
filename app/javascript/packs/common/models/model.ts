@@ -1,5 +1,6 @@
 import Vue from "vue/dist/vue";
 import trackable from "../classMixins/trackable";
+import Guid from "../helpers/guid";
 
 class Model {
   id: string;
@@ -8,6 +9,11 @@ class Model {
   store: any;
   except: string[] = ['except', 'include', 'parent', 'store'];
   include: string[] = [];
+
+  constructor() {
+    this.defineProperty('id', Guid.create())
+  }
+
 
   get EMBEDDED_MODELS(): {[key: string]: Function} {
     return {};
@@ -28,7 +34,8 @@ class Model {
       if (Object.keys(this.EMBEDDED_MODELS).includes(key)) {
         this.loadEmbeddedModel(key, json);
       } else {
-        this.defineProperty(key, json[key]);
+        // this.defineProperty(key, json[key]);
+        Vue.set(this, `_${key}`, json[key]);
       }
     }
 
@@ -114,6 +121,18 @@ class Model {
     let obj = this[key].find(o => o.id === json.id) || this.EMBEDDED_MODELS[key](this, json);
     obj.parent = this;
     return obj.loadFromJson(json);
+  }
+
+  get hasChanged(): boolean {
+    return this._hasChanged;
+  }
+
+  set hasChanged(newVal) {
+    this._hasChanged = newVal;
+    if (this.parent) {
+      console.log(this.parent)
+      this.parent.hasChanged = this.parent.hasChanged || newVal;
+    }
   }
 }
 

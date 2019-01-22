@@ -1,6 +1,7 @@
 class EventType
   include Mongoid::Document
   include Mongoid::Timestamps::Short
+  include CustomIdable
 
   field :title, type: String, default: 'Untitled Event Type'
 

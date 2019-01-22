@@ -1,6 +1,7 @@
 class EventField
   include Mongoid::Document
   include Mongoid::Timestamps::Short
+  include CustomIdable
 
   embedded_in :event_type
 

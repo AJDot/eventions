@@ -8,8 +8,13 @@ export default class EventType extends Model {
   except: string[] = ['except', 'parent', 'store'];
   event_fields: EventField[] = [];
 
+  constructor() {
+    super()
+    this.defineProperty('title', '', false);
+  }
+
   get EMBEDDED_MODELS(): {[key: string]: Function} {
-    return {event_fields: (parent, json) => EventFieldFactory.create(json._type)};
+    return {event_fields: (parent, json) => EventFieldFactory.create(parent, json._type, false)};
   }
 
   // ****************************** Track Changes ******************************

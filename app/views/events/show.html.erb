@@ -1,8 +1,24 @@
+<header>
+  <div class="row">
+    <div class="col">
+      <h2><%= @event.title %> on <%= @event.c_at %></h2>
+    </div>
+    <div class="col">
+      <%= link_to "Edit", edit_event_path(@event), class: 'btn' %>
+    </div>
+  </div>
+</header>
+
+<%= render partial: 'partials/alert' %>
 <div class="container">
-  <div>Title: <%= @event.title %></div>
-  <% @event.event_type.event_fields.map {|field| {title: field.label, key: "f_#{field.id.to_s}"}}.each do |attrs| %>
-    <div>
-      <%= attrs[:title] %><%= @event[attrs[:key]] %>
+  <% @event.event_type.event_fields.map {|field| {label: field.label, key: "f_#{field.id.to_s}"}}.each do |attrs| %>
+    <div class="row">
+      <div class="col">
+        <%= attrs[:label] %>:
+      </div>
+      <div class="col">
+        <%= @event[attrs[:key]] %>
+      </div>
     </div>
   <% end %>
 </div>

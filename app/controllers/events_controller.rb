@@ -18,6 +18,19 @@ class EventsController < ApplicationController
 
   end
 
+  def edit
+
+  end
+
+  def update
+    if @event.update(update_params)
+      redirect_to event_path(@event), notice: "Event #{@event.title} was updated."
+    else
+      render :edit
+    end
+
+  end
+
   private
 
   def event_params
@@ -33,6 +46,10 @@ class EventsController < ApplicationController
   end
 
   def create_params
+    new_params
+  end
+
+  def update_params
     new_params
   end
 end
